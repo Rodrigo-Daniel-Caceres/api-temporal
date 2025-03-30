@@ -47,6 +47,17 @@ export class ReviewDTO {
   }
 }
 
+export class UserDTO {
+  constructor(user) {
+    this.id = user.id;
+    this.email = user.email;
+    this.name = user.name;
+    this.image = user.image?.src || null;
+    this.backgroundImage = user.backgroundImage?.src || null;
+    this.games = user.games.map((game) => new SimpleGameDTO(game));
+  }
+}
+
 export class SimpleUserDTO {
   constructor(user) {
     this.id = user.id;
@@ -56,7 +67,7 @@ export class SimpleUserDTO {
 }
 
 export class GamePageDTO {
-  constructor(pageInfo) {
+  constructor(pageInfo = { list: [], currentPage: 1, amountOfElements: 0, amountOfPages: 0 }) {
     this.list = pageInfo.list.map((game) => new SimpleGameDTO(game));
     this.currentPage = pageInfo.currentPage.toString();
     this.amountOfElements = pageInfo.amountOfElements;

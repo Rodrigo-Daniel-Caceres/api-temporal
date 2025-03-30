@@ -25,6 +25,12 @@ app.post(
   tokenController.checkRole("public"),
   userController.register
 );
+
+app
+  .route("/users/:userId/friends")
+  .get(tokenController.checkRole("public"), userController.getFriends)
+  .post(tokenController.checkRole("user"), userController.addOrRemoveFriend);
+
 // Games
 app.get("/games", tokenController.checkRole("public"), gameController.getGames);
 app.get(
@@ -37,6 +43,13 @@ app
   .get(tokenController.checkRole("public"), gameController.getGamesId)
   .put(tokenController.checkRole("user"), gameController.putGamesId)
   .delete(tokenController.checkRole("user"), gameController.deleteGamesId);
+
+// Search
+app.get(
+  "/search", 
+  tokenController.checkRole("public"), 
+  gameController.search
+);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);

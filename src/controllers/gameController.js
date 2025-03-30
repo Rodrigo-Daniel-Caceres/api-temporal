@@ -57,6 +57,17 @@ class GameController {
       res.status(404).json({ error: "Game not in the cart" });
     }
   };
+
+  search = async (req, res) => {
+    try {
+        const query = req.query.query ? req.query.query.toString() : "";
+        const page = req.query.page ? req.query.page.toInt() : 1;
+        const gamePage = await this.service.searchGame(query, page);
+        res.json(new GamePageDTO(gamePage));
+    } catch (error) {
+        res.json(new GamePageDTO());
+    }
+  };
 }
 
 export default GameController;
